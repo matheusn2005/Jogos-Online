@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nome');
             $table->foreignId('categoria_pai')->nullable()->constrained('categorias')->onDelete('cascade');
             $table->timestamps();
-        });        
+        }); 
     }
 
     /**
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('categorias');
     }
 };

@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('produto_venda', function (Blueprint $table) {
+        Schema::create('cidades', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('venda_id')->constrained('vendas')->onDelete('cascade');
-            $table->foreignId('produto_id')->constrained('produtos')->onDelete('cascade');
-            $table->integer('quantidade');
-            $table->decimal('subtotal', 10, 2);
+            $table->string('nome');
+            $table->string('estado');
             $table->timestamps();
-        });        
+        });
     }
 
     /**
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('cidades');
     }
 };
