@@ -19,7 +19,7 @@
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
-        <label>name:</label>
+        <label>nome:</label>
         <input type="text" name="name" required><br><br>
 
         <label>Email:</label>
