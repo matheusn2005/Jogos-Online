@@ -20,7 +20,9 @@ return new class extends Migration
             $table->decimal('valor', 10, 2);
             $table->foreignId('categoria_id')->constrained('categorias')->onDelete('cascade');
             $table->timestamps();
-        });        
+        });
+        
+        
     }
 
     /**
@@ -28,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('produtos');
     }
 };

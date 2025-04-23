@@ -11,16 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('enderecos', function (Blueprint $table) {
+        Schema::create('vendas', function (Blueprint $table) {
             $table->id();
-            $table->string('descricao');
-            $table->string('logradouro');
-            $table->string('numero');
-            $table->string('bairro');
-            $table->foreignId('cidade_id')->constrained('cidades')->onDelete('cascade');
+            $table->decimal('valor_total', 10, 2);
             $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
+            $table->foreignId('endereco_id')->constrained('enderecos')->onDelete('cascade');
             $table->timestamps();
-        });        
+        });
     }
 
     /**
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('vendas');
     }
 };
