@@ -5,13 +5,8 @@
     <title>Cadastro</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-light">
-
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <div class="card p-4 shadow">
-                <h3 class="text-center mb-4">Cadastro</h3>
+<body>
+    <h2>Cadastro</h2>
 
                 @if ($errors->any())
                     <div class="alert alert-danger">
