@@ -16,8 +16,9 @@ class Produto extends Model
 
     public function categoria()
     {
-        return $this->belongsTo(Categoria::class);
+        return $this->belongsTo(\App\Models\Categoria::class);
     }
+
 
     public function fotos()
     {
@@ -30,5 +31,11 @@ class Produto extends Model
                     ->withPivot('quantidade', 'subtotal')
                     ->withTimestamps();
     }
+
+    public function imagens()
+    {
+        return $this->hasMany(\App\Models\ImagemProduto::class);
+    }
+
 }
 
