@@ -1,25 +1,17 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ $produto->nome }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .galeria-img {
-            height: 150px;
-            object-fit: cover;
-        }
-    </style>
-</head>
-<body class="bg-light">
+@extends('layouts.app')
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container">
-        <a class="navbar-brand" href="{{ route('loja.index') }}">← Voltar ao Catálogo</a>
-    </div>
-</nav>
+@section('title', $produto->nome)
 
-<div class="container mt-5">
+@section('content')
+
+<style>
+    .galeria-img {
+        height: 150px;
+        object-fit: cover;
+    }
+</style>
+
+<div class="container mt-4">
 
     <div class="row">
         <div class="col-md-6">
@@ -36,7 +28,7 @@
             <p class="mt-4">{{ $produto->descricao }}</p>
 
             <div class="d-grid gap-2">
-                <button class="btn btn-success btn-lg">Adicionar ao Carrinho</button> <!-- Futuro -->
+                <a href="{{ route('cliente.carrinho.adicionar', $produto->id) }}" class="btn btn-success">Adicionar ao Carrinho</a>
             </div>
         </div>
     </div>
@@ -56,5 +48,4 @@
 
 </div>
 
-</body>
-</html>
+@endsection
