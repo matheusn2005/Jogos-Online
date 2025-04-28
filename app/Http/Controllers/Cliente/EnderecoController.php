@@ -26,7 +26,7 @@ class EnderecoController extends Controller
             'logradouro' => 'required|string|max:255',
             'numero' => 'required|string|max:50',
             'bairro' => 'required|string|max:255',
-            'cidade' => 'required|string|max:255', // Agora é string
+            'cidade' => 'required|string|max:255',
         ]);
 
         Endereco::create([
@@ -34,7 +34,7 @@ class EnderecoController extends Controller
             'logradouro' => $request->logradouro,
             'numero' => $request->numero,
             'bairro' => $request->bairro,
-            'cidade' => $request->cidade, // Agora salva como texto
+            'cidade' => $request->cidade,
         ]);
 
         return redirect()->route('cliente.enderecos.index')->with('success', 'Endereço cadastrado com sucesso!');
@@ -59,7 +59,7 @@ class EnderecoController extends Controller
             'logradouro' => 'required|string|max:255',
             'numero' => 'required|string|max:50',
             'bairro' => 'required|string|max:255',
-            'cidade' => 'required|string|max:255', // Também valida como string
+            'cidade' => 'required|string|max:255',
         ]);
 
         $endereco->update([

@@ -110,3 +110,27 @@ Route::prefix('cliente')->name('cliente.')->middleware('auth')->group(function (
     // Endereços
     Route::resource('enderecos', EnderecoController::class)->except(['show']);
 });
+
+use App\Http\Controllers\Admin\PlataformaController;
+
+Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function () {
+    Route::get('/plataformas/create', [PlataformaController::class, 'create'])->name('plataformas.create');
+    Route::post('/plataformas/store', [PlataformaController::class, 'store'])->name('plataformas.store');
+});
+
+// Produtos
+Route::get('/admin/produtos/create', [ProdutoController::class, 'create'])->name('admin.produtos.create');
+
+// Categorias
+Route::get('/admin/categorias/create', [CategoriaController::class, 'create'])->name('admin.categorias.create');
+
+// Plataformas
+Route::get('/admin/plataformas/create', [PlataformaController::class, 'create'])->name('admin.plataformas.create');
+
+// Cadastro de novo admin
+Route::get('/admin/register', [AdminRegisterController::class, 'create'])->name('admin.register');
+Route::post('/admin/register', [AdminRegisterController::class, 'store']);
+
+// Alteração de senha
+Route::get('/admin/password/edit', [ProfileController::class, 'edit'])->name('admin.password.edit');
+Route::post('/admin/password/update', [ProfileController::class, 'update'])->name('admin.password.update');

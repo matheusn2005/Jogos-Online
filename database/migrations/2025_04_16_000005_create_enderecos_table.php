@@ -10,11 +10,11 @@ return new class extends Migration
     {
         Schema::create('enderecos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cliente_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('cliente_id')->constrained('users')->onDelete('cascade'); // ou tabela clientes, depende do seu projeto
             $table->string('logradouro');
             $table->string('numero');
             $table->string('bairro');
-            $table->string('cidade'); // Aqui arruma: campo cidade como string normal
+            $table->string('cidade');
             $table->timestamps();
         });
     }

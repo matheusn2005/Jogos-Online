@@ -63,7 +63,7 @@ class CarrinhoController extends Controller
             return redirect()->route('cliente.carrinho.index')->with('error', 'Seu carrinho está vazio!');
         }
 
-        $enderecos = Auth::user()->enderecos ?? []; // Buscamos endereços do cliente
+        $enderecos = Auth::user()->enderecos ?? [];
         return view('cliente.carrinho.checkout', compact('carrinho', 'enderecos'));
     }
 
@@ -79,7 +79,7 @@ class CarrinhoController extends Controller
             'endereco_id' => ['required', 'exists:enderecos,id'],
         ]);
 
-        // Criar Venda
+        
         $venda = Venda::create([
             'cliente_id' => Auth::id(),
             'endereco_id' => $request->endereco_id,
@@ -88,7 +88,7 @@ class CarrinhoController extends Controller
             }),
         ]);
 
-        // Cadastrar produtos da venda
+        
         foreach ($carrinho as $id => $item) {
             ProdutoVenda::create([
                 'venda_id' => $venda->id,
@@ -98,7 +98,7 @@ class CarrinhoController extends Controller
             ]);
         }
 
-        // Limpar o carrinho
+        
         session()->forget('carrinho');
 
         return redirect()->route('loja.index')->with('success', 'Compra realizada com sucesso!');

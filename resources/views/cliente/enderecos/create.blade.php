@@ -36,9 +36,10 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Cidade:</label>
+            <label>Cidade:</label>
             <input type="text" name="cidade" class="form-control" required>
         </div>
+
 
 
         <div class="d-grid">

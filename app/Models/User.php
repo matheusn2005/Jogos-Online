@@ -42,4 +42,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    
+    public function enderecos()
+    {
+        return $this->hasMany(\App\Models\Endereco::class, 'cliente_id');
+    }
+
 }
