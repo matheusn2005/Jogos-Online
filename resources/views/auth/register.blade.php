@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Cadastro de Cliente</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
+@extends('layouts.app')
 
-<div class="container mt-5">
+@section('title', 'Cadastro de Cliente')
+
+@section('content')
+
+<div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-5">
-            <div class="card p-4 shadow">
+            <div class="card p-4 shadow-sm">
                 <h3 class="text-center mb-4">Cadastrar Conta de Cliente</h3>
 
                 @if($errors->any())
@@ -27,22 +24,22 @@
                     @csrf
 
                     <div class="mb-3">
-                        <label>Nome:</label>
+                        <label class="form-label">Nome:</label>
                         <input type="text" name="name" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
-                        <label>Email:</label>
+                        <label class="form-label">Email:</label>
                         <input type="email" name="email" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
-                        <label>Senha:</label>
+                        <label class="form-label">Senha:</label>
                         <input type="password" name="password" class="form-control" required>
                     </div>
 
                     <div class="mb-3">
-                        <label>Confirme a Senha:</label>
+                        <label class="form-label">Confirme a Senha:</label>
                         <input type="password" name="password_confirmation" class="form-control" required>
                     </div>
 
@@ -52,12 +49,11 @@
                 </form>
 
                 <div class="mt-4 text-center">
-                    <a href="{{ route('login') }}">Já tem conta? Faça Login</a>
+                    <a href="{{ route('login') }}" class="text-decoration-none">Já tem conta? Faça Login</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-</body>
-</html>
+@endsection
