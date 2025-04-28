@@ -8,11 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('guest:admin')->except('logout');
-    }
-
     public function showLoginForm()
     {
         return view('admin.auth.login');
@@ -23,7 +18,8 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::guard('admin')->attempt($credentials)) {
-            return redirect()->intended('/admin/dashboard');
+           
+            return redirect()->intended(route('admin.dashboard'));
         }
 
         return back()->withErrors([
@@ -34,6 +30,6 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::guard('admin')->logout();
-        return redirect('/admin/login');
+        return redirect()->route('admin.login');
     }
 }

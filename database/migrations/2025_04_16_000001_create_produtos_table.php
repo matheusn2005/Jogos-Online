@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->decimal('valor', 10, 2);
             $table->foreignId('categoria_id')->constrained('categorias')->onDelete('cascade');
+            $table->foreignId('plataforma_id')->constrained('plataformas')->onDelete('cascade');
             $table->timestamps();
         });
         
