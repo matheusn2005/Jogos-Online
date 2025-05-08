@@ -10,10 +10,16 @@ class Produto extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nome', 'descricao', 'quantidade_estoque',
-        'slug', 'valor', 'categoria_id',
+        'nome',
+        'descricao',
+        'quantidade_estoque',
+        'slug',
+        'valor',
+        'categoria_id',
+        'plataforma_id',
+        'capa',
     ];
-
+    
     public function categoria()
     {
         return $this->belongsTo(\App\Models\Categoria::class);
