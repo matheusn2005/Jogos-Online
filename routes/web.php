@@ -75,5 +75,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/plataformas/create', [PlataformaController::class, 'create'])->name('plataformas.create');
         Route::post('/plataformas/store', [PlataformaController::class, 'store'])->name('plataformas.store');
+
+        Route::get('/plataformas/create', [PlataformaController::class, 'create'])->name('plataformas.create');
+        Route::post('/plataformas/store', [PlataformaController::class, 'store'])->name('plataformas.store');
+
+        
     });
 });

@@ -33,6 +33,10 @@
             Alterar Minha Senha
         </a>
 
+        <a href="{{ route('admin.password.edit') }}" class="btn btn-success btn-lg">
+            Acessar Gráficos
+        </a>
+
     </div>
 
 </div>
