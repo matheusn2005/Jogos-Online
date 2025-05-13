@@ -15,12 +15,14 @@ use App\Http\Controllers\Admin\AdminRegisterController;
 use App\Http\Controllers\Admin\ProdutoController;
 use App\Http\Controllers\Admin\CategoriaController;
 use App\Http\Controllers\Admin\PlataformaController;
-use App\Http\Controllers\Admin\ApiConfigController; // ✅ IMPORTAÇÃO ADICIONADA
+use App\Http\Controllers\Admin\ApiConfigController;
+use App\Http\Controllers\EntregaController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+// 🔐 Rotas de Autenticação Cliente
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -28,15 +30,18 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 
+// 🛒 Rotas Loja Pública
 Route::get('/jogos', [LojaController::class, 'index'])->name('loja.index');
 Route::get('/jogos/{slug}', [LojaController::class, 'show'])->name('loja.show');
 
+// 🛍️ Carrinho (público/autenticado)
 Route::get('/carrinho', [CarrinhoController::class, 'index'])->name('carrinho.index');
 Route::get('/carrinho/adicionar/{id}', [CarrinhoController::class, 'adicionar'])->name('carrinho.adicionar');
 Route::get('/carrinho/remover/{id}', [CarrinhoController::class, 'remover'])->name('carrinho.remover');
 Route::get('/carrinho/checkout', [CarrinhoController::class, 'checkout'])->name('carrinho.checkout');
 Route::post('/carrinho/finalizar', [CarrinhoController::class, 'finalizarCompra'])->name('carrinho.finalizar');
 
+// 👤 Área Cliente
 Route::prefix('cliente')->name('cliente.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [ClienteDashboardController::class, 'index'])->name('dashboard');
 
@@ -52,8 +57,12 @@ Route::prefix('cliente')->name('cliente.')->middleware('auth')->group(function (
     Route::resource('enderecos', EnderecoController::class)->except(['show']);
 
     Route::get('/compras', [ClienteDashboardController::class, 'compras'])->name('compras');
+
+    // ✅ NOVA ROTA: Entregas do cliente (apenas dele)
+    Route::get('/entregas', [EntregaController::class, 'minhasEntregas'])->name('entregas');
 });
 
+// 🛠️ Área Administrativa
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [AdminLoginController::class, 'login']);
@@ -77,8 +86,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/plataformas/create', [PlataformaController::class, 'create'])->name('plataformas.create');
         Route::post('/plataformas/store', [PlataformaController::class, 'store'])->name('plataformas.store');
 
-        // ✅ NOVAS ROTAS PARA CONFIGURAÇÃO DE API
+        // ✅ Configuração da API
         Route::get('/api-config', [ApiConfigController::class, 'index'])->name('api-config.index');
         Route::post('/api-config', [ApiConfigController::class, 'store'])->name('api-config.store');
+
+        // ✅ Entregas (visíveis apenas para admin autenticado)
+        Route::get('/entregas', [EntregaController::class, 'index'])->name('entregas.index');
+        Route::post('/entregas/{compra}/atualizar', [EntregaController::class, 'atualizar'])->name('entregas.atualizar');
     });
 });

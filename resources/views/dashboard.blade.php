@@ -8,9 +8,14 @@
         <h1>Bem-vindo, {{ Auth::user()->name }}!</h1>
         <p class="lead">Você está logado no sistema.</p>
 
-        <a href="{{ route('cliente.compras') }}" class="btn btn-primary mt-3">
-            Ver Minhas Compras
-        </a>
+        <div class="d-flex justify-content-center gap-3 mt-4">
+            <a href="{{ route('cliente.compras') }}" class="btn btn-primary">
+                Ver Minhas Compras
+            </a>
+            <a href="{{ route('cliente.entregas') }}" class="btn btn-outline-primary">
+                Minhas Entregas
+            </a>
+        </div>
     </div>
 </div>
 @endsection
