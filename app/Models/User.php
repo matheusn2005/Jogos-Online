@@ -48,4 +48,10 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\Endereco::class, 'cliente_id');
     }
 
+    public function vendas()
+    {
+        return $this->hasMany(\App\Models\Venda::class, 'cliente_id');
+    }
+
+
 }

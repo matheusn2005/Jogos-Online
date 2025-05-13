@@ -50,6 +50,8 @@ Route::prefix('cliente')->name('cliente.')->middleware('auth')->group(function (
     Route::post('/senha/update', [SenhaController::class, 'update'])->name('senha.update');
 
     Route::resource('enderecos', EnderecoController::class)->except(['show']);
+
+    Route::get('/compras', [ClienteDashboardController::class, 'compras'])->name('compras');
 });
 
 Route::prefix('admin')->name('admin.')->group(function () {
