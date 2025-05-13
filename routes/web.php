@@ -15,11 +15,11 @@ use App\Http\Controllers\Admin\AdminRegisterController;
 use App\Http\Controllers\Admin\ProdutoController;
 use App\Http\Controllers\Admin\CategoriaController;
 use App\Http\Controllers\Admin\PlataformaController;
+use App\Http\Controllers\Admin\ApiConfigController; // ✅ IMPORTAÇÃO ADICIONADA
 
 Route::get('/', function () {
     return view('welcome');
 });
-
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
@@ -30,7 +30,6 @@ Route::post('/register', [RegisterController::class, 'register']);
 
 Route::get('/jogos', [LojaController::class, 'index'])->name('loja.index');
 Route::get('/jogos/{slug}', [LojaController::class, 'show'])->name('loja.show');
-
 
 Route::get('/carrinho', [CarrinhoController::class, 'index'])->name('carrinho.index');
 Route::get('/carrinho/adicionar/{id}', [CarrinhoController::class, 'adicionar'])->name('carrinho.adicionar');
@@ -75,11 +74,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::get('/plataformas/create', [PlataformaController::class, 'create'])->name('plataformas.create');
         Route::post('/plataformas/store', [PlataformaController::class, 'store'])->name('plataformas.store');
-    });
 
-    Route::middleware('auth:admin')->group(function () {
+        // ✅ NOVAS ROTAS PARA CONFIGURAÇÃO DE API
         Route::get('/api-config', [ApiConfigController::class, 'index'])->name('api-config.index');
         Route::post('/api-config', [ApiConfigController::class, 'store'])->name('api-config.store');
     });
-
 });
