@@ -11,4 +11,11 @@ class DashboardController extends Controller
     {
         return view('dashboard');
     }
+
+    public function compras()
+    {
+        $compras = auth()->user()->vendas()->latest()->get();
+        return view('cliente.compras', compact('compras'));
+    }
+
 }

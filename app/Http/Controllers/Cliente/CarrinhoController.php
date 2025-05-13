@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Endereco; // Importar o model de endereços
 use App\Models\Venda;
 use App\Models\ProdutoVenda;
+use App\Models\ApiConfig;
+use Illuminate\Support\Facades\Http;
 
 
 class CarrinhoController extends Controller
@@ -67,40 +69,57 @@ class CarrinhoController extends Controller
         return view('cliente.carrinho.checkout', compact('carrinho', 'enderecos'));
     }
 
-    public function finalizarCompra(Request $request)
+    
+
+        public function finalizarCompra(Request $request)
+    {
+        $user = auth()->user();
+        $venda = new Venda([
+            'cliente_id' => $user->id,
+            'endereco_id' => $request->endereco_id,
+            'valor_total' => $this->calcularTotalCarrinho(),
+            'status' => 'pendente'
+        ]);
+        $venda->save();
+
+        // 🔐 Dados da API
+        $config = ApiConfig::first();
+        $cpf = $user->cpf; // supondo que tenha esse campo
+
+        // ✅ Chamada para a Caçapay
+        $resposta = Http::withToken($config->cacapay_token)
+            ->post($config->cacapay_url, ['cpf' => $cpf]);
+
+        if ($resposta->failed() || $resposta->json('status') == 'negado') {
+            $venda->status = 'negado';
+            $venda->save();
+            return redirect()->back()->with('error', 'Compra não autorizada pela Caçapay.');
+        }
+
+        // ✅ Pagamento aprovado
+        $venda->status = 'pago';
+        $venda->save();
+
+        // 📦 Envio para Caçalog
+        $entrega = Http::withToken($config->cacalog_token)
+            ->post($config->cacalog_url, [
+                'venda_id' => $venda->id,
+                'cliente' => $user->name,
+                'endereco' => $user->enderecos->first()?->toArray() ?? [],
+            ]);
+
+        return redirect()->route('cliente.dashboard')->with('success', 'Compra finalizada com sucesso!');
+    }
+
+    private function calcularTotalCarrinho()
     {
         $carrinho = session()->get('carrinho', []);
+        $total = 0;
 
-        if (count($carrinho) == 0) {
-            return redirect()->route('cliente.carrinho.index')->with('error', 'Carrinho vazio!');
+        foreach ($carrinho as $item) {
+            $total += $item['preco'] * $item['quantidade'];
         }
 
-        $request->validate([
-            'endereco_id' => ['required', 'exists:enderecos,id'],
-        ]);
-
-        
-        $venda = Venda::create([
-            'cliente_id' => Auth::id(),
-            'endereco_id' => $request->endereco_id,
-            'valor_total' => collect($carrinho)->sum(function ($item) {
-                return $item['preco'] * $item['quantidade'];
-            }),
-        ]);
-
-        
-        foreach ($carrinho as $id => $item) {
-            ProdutoVenda::create([
-                'venda_id' => $venda->id,
-                'produto_id' => $id,
-                'quantidade' => $item['quantidade'],
-                'subtotal' => $item['preco'] * $item['quantidade'],
-            ]);
-        }
-
-        
-        session()->forget('carrinho');
-
-        return redirect()->route('loja.index')->with('success', 'Compra realizada com sucesso!');
+        return $total;
     }
 }
