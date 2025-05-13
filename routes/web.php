@@ -76,4 +76,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/plataformas/create', [PlataformaController::class, 'create'])->name('plataformas.create');
         Route::post('/plataformas/store', [PlataformaController::class, 'store'])->name('plataformas.store');
     });
+
+    Route::middleware('auth:admin')->group(function () {
+        Route::get('/api-config', [ApiConfigController::class, 'index'])->name('api-config.index');
+        Route::post('/api-config', [ApiConfigController::class, 'store'])->name('api-config.store');
+    });
+
 });
