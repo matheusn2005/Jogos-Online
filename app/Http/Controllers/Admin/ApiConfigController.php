@@ -8,12 +8,18 @@ use App\Models\ApiConfig;
 
 class ApiConfigController extends Controller
 {
+    /**
+     * Exibe a tela de configuração das APIs Caçapay e Caçalog.
+     */
     public function index()
     {
         $config = ApiConfig::first();
         return view('admin.api-config', compact('config'));
     }
 
+    /**
+     * Armazena ou atualiza as configurações das APIs.
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -24,9 +30,10 @@ class ApiConfigController extends Controller
         ]);
 
         $config = ApiConfig::firstOrNew(['id' => 1]);
-        $config->fill($request->all())->save();
+        $config->fill($request->all());
+        $config->save();
 
-        return redirect()->route('admin.api-config.index')->with('success', 'Configurações salvas com sucesso!');
+        return redirect()->route('admin.api-config.index')
+                         ->with('success', 'Configurações salvas com sucesso!');
     }
 }
-
