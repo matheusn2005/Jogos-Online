@@ -22,7 +22,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// 🔐 Rotas de Autenticação Cliente
+// 🔐 Autenticação Cliente
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -30,18 +30,18 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
 
-// 🛒 Rotas Loja Pública
+// 🛒 Loja Pública
 Route::get('/jogos', [LojaController::class, 'index'])->name('loja.index');
 Route::get('/jogos/{slug}', [LojaController::class, 'show'])->name('loja.show');
 
-// 🛍️ Carrinho (público/autenticado)
+// 🛍️ Carrinho (público e autenticado)
 Route::get('/carrinho', [CarrinhoController::class, 'index'])->name('carrinho.index');
 Route::get('/carrinho/adicionar/{id}', [CarrinhoController::class, 'adicionar'])->name('carrinho.adicionar');
 Route::get('/carrinho/remover/{id}', [CarrinhoController::class, 'remover'])->name('carrinho.remover');
 Route::get('/carrinho/checkout', [CarrinhoController::class, 'checkout'])->name('carrinho.checkout');
 Route::post('/carrinho/finalizar', [CarrinhoController::class, 'finalizarCompra'])->name('carrinho.finalizar');
 
-// 👤 Área Cliente
+// 👤 Área do Cliente
 Route::prefix('cliente')->name('cliente.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [ClienteDashboardController::class, 'index'])->name('dashboard');
 
@@ -57,8 +57,6 @@ Route::prefix('cliente')->name('cliente.')->middleware('auth')->group(function (
     Route::resource('enderecos', EnderecoController::class)->except(['show']);
 
     Route::get('/compras', [ClienteDashboardController::class, 'compras'])->name('compras');
-
-    // ✅ NOVA ROTA: Entregas do cliente (apenas dele)
     Route::get('/entregas', [EntregaController::class, 'minhasEntregas'])->name('entregas');
 });
 
@@ -86,11 +84,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/plataformas/create', [PlataformaController::class, 'create'])->name('plataformas.create');
         Route::post('/plataformas/store', [PlataformaController::class, 'store'])->name('plataformas.store');
 
-        // ✅ Configuração da API
+        // ⚙️ Configuração de API
         Route::get('/api-config', [ApiConfigController::class, 'index'])->name('api-config.index');
         Route::post('/api-config', [ApiConfigController::class, 'store'])->name('api-config.store');
 
-        // ✅ Entregas (visíveis apenas para admin autenticado)
+        // 🚚 Entregas (apenas admin)
         Route::get('/entregas', [EntregaController::class, 'index'])->name('entregas.index');
         Route::post('/entregas/{compra}/atualizar', [EntregaController::class, 'atualizar'])->name('entregas.atualizar');
     });

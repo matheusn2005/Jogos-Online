@@ -1,33 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-
-        <!-- Google tag (gtag.js) -->
+    <!-- Google tag -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-4F4C9RMGLB"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-4F4C9RMGLB');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-4F4C9RMGLB');
     </script>
     
     <meta charset="UTF-8">
     <title>@yield('title', 'Jogos Online')</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HGWGC1Z4GY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-HGWGC1Z4GY');
-</script>
 </head>
 
 <body class="bg-light">
-
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
@@ -52,6 +40,12 @@
                                 <a class="dropdown-item" href="{{ route('cliente.dashboard') }}">Dashboard</a>
                             </li>
                             <li>
+                                <a class="dropdown-item" href="{{ route('cliente.compras') }}">Ver Minhas Compras</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('cliente.entregas') }}">Minhas Entregas</a>
+                            </li>
+                            <li>
                                 <a class="dropdown-item" href="{{ route('cliente.senha.edit') }}">Alterar Senha</a>
                             </li>
                             <li><hr class="dropdown-divider"></li>
@@ -68,7 +62,6 @@
         </div>
     </div>
 </nav>
-
 
 <div class="container mt-4">
     @yield('content')
