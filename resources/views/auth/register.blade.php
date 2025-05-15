@@ -42,6 +42,12 @@
                         <label class="form-label">Confirme a Senha:</label>
                         <input type="password" name="password_confirmation" class="form-control" required>
                     </div>
+                    
+                    <div class="mb-3">
+                        <label for="cpf" class="form-label">CPF</label>
+                        <input type="text" name="cpf" id="cpf" class="form-control" value="{{ old('cpf') }}" required>
+                    </div>
+
 
                     <div class="d-grid">
                         <button type="submit" class="btn btn-success">Cadastrar</button>

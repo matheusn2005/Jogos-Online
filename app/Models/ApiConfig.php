@@ -2,10 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class ApiConfig extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+        'cacapay_url',
+        'cacapay_token',
+        'cacalog_url',
+        'cacalog_token',
+    ];
+
+    // ✅ Adicione isso para evitar problemas com firstOrNew(['id' => 1])
+    public $incrementing = false;
+    protected $primaryKey = 'id';
 }

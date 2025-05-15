@@ -58,7 +58,7 @@
         @if(count($carrinho) > 0)
             <div class="d-grid mt-4">
                 <a href="{{ route('cliente.carrinho.checkout') }}" class="btn btn-success btn-lg">
-                    Finalizar Compra 🛒
+                    Finalizar Compra
                 </a>
             </div>
         @endif
